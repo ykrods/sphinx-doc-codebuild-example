@@ -1,9 +1,16 @@
+# build image specified in CodeBuild
 version: 0.2
 phases:
+  pre_build:
+    commands:
+      - "echo ${CODEBUILD_RESOLVED_SOURCE_VERSION}"
+      - "export BRANCH=`git branch --no-color --contains ${CODEBUILD_RESOLVED_SOURCE_VERSION} | grep -v '(no branch)' -m 1 | awk '{$1=$1};1'`"
+      - "echo ${BRANCH}"
   build:
     commands:
-      - "sphinx-build -b html $CODEBUILD_SRC_DIR/source $CODEBUILD_SRC_DIR/build"
+      - "sphinx-build -b html ${CODEBUILD_SRC_DIR}/source ${CODEBUILD_SRC_DIR}/build/${BRANCH}"
 artifacts:
   files:
-    - 'build/*'
+    - '**/*'
+  base-directory: build
   name: $(AWS_REGION)-$(date +%Y-%m-%d)
