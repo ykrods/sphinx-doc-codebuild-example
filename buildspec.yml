@@ -1,0 +1,9 @@
+version: 0.2
+phases:
+  build:
+    commands:
+      - "sphinx-build -b html $CODEBUILD_SRC_DIR/source $CODEBUILD_SRC_DIR/build"
+artifacts:
+  files:
+    - 'build/*'
+  name: $(AWS_REGION)-$(date +%Y-%m-%d)
