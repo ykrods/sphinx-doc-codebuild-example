@@ -10,7 +10,7 @@ Welcome to example-doc's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+   sub
 
 Indices and tables
 ==================
